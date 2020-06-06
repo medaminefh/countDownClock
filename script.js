@@ -9,6 +9,7 @@ const timer = (seconds) => {
     clearInterval(countDown);
     timerDisplay.textContent = "NOT VALID ";
     endTime.textContent = "";
+    document.title = "404 NOT VALID";
   } else {
     clearInterval(countDown);
     const now = Date.now();
