@@ -3,25 +3,32 @@ const endTime = document.querySelector(".display__end-time");
 const btn = document.querySelectorAll("[data-time]");
 
 let countDown;
-const timer = (seconds) => {
-  clearInterval(countDown);
-  const now = Date.now();
-  const then = now + seconds * 1000;
 
-  displayTimeLeft(seconds);
-  displayEndTime(then);
-  countDown = setInterval(() => {
-    const secondsLeft = Math.round((then - Date.now()) / 1000);
-    if (secondsLeft < 0) {
-      clearInterval(countDown);
-      timerDisplay.textContent = "--:--";
-      timerDisplay.style.color = "#122";
-      endTime.textContent = "Ended!!";
-      document.title = "Done";
-      return;
-    }
-    displayTimeLeft(secondsLeft);
-  }, 1000);
+const timer = (seconds) => {
+  if (isNaN(seconds)) {
+    clearInterval(countDown);
+    timerDisplay.textContent = "NOT VALID ";
+    endTime.textContent = "";
+  } else {
+    clearInterval(countDown);
+    const now = Date.now();
+    const then = now + seconds * 1000;
+
+    displayTimeLeft(seconds);
+    displayEndTime(then);
+    countDown = setInterval(() => {
+      const secondsLeft = Math.round((then - Date.now()) / 1000);
+      if (secondsLeft < 0) {
+        clearInterval(countDown);
+        timerDisplay.textContent = "--:--";
+        timerDisplay.style.color = "#122";
+        endTime.textContent = "Ended!!";
+        document.title = "Done";
+        return;
+      }
+      displayTimeLeft(secondsLeft);
+    }, 1000);
+  }
 };
 
 const displayTimeLeft = (s) => {
@@ -55,7 +62,6 @@ btn.forEach((a) => {
 document.customForm.addEventListener("submit", function (e) {
   e.preventDefault();
   const min = this.minutes.value;
-  console.log(min);
-  timer(min * 60);
+  timer(Number(min * 60));
   this.reset();
 });

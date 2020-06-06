@@ -97,4 +97,8 @@ p {
     .timer__controls {
         grid-template-columns: 1fr;
     }
+
+    .display {
+        margin-top: 35px;
+    }
 }
